@@ -7,6 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "build:prod": "ng build -c=production",
     "serve:ssr:angularSample": "node dist/angular-sample/server/server.mjs"
   },
   "private": true,
