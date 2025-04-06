@@ -1,0 +1,54 @@
+<p>rooms works!</p>
+<!--<h1>Welcome to {{ hotelName }}</h1>-->
+<app-header></app-header>
+<app-header></app-header>
+<app-header></app-header>
+<app-header></app-header>
+
+<!--{{rooms$ | async | json}}--> <!--async pipe is used to subscribe to the observable and unwrap the data from it
+also automatically unsubscribes when the component is destroyed-->
+
+{{getError$ | async}}
+
+Number of rooms:
+<div [ngStyle]="{'background-color': 'red'}" [innerText]="numberOfRooms" [hidden]="hideRooms">
+
+</div>
+
+<h1>
+  {{roomsCount$ | async }}
+</h1>
+
+{{priceFilter.value}}
+<div>
+  <input type="number" class="form-control" placeholder="Price" [formControl]="priceFilter" />
+</div>
+
+<app-room-detail-table *ngIf="rooms$ | async as rooms" [price]="priceFilter.value || 0" [rooms]="rooms" (selectedRoom)="selectRoom($event)" [title]="title"></app-room-detail-table>
+<div>
+  <button (click)="addRoom()">
+    Add Room
+  </button>
+</div>
+
+<div>
+  <button (click)="removeRoom()">
+    Remove Room
+  </button>
+</div>
+
+<div>
+  <button (click)="editRoom()">
+    Edit Rooms
+  </button>
+</div>
+
+<div *ngIf="selectedRoom">
+  {{ selectedRoom | json }}
+</div>
+
+<button (click)="toggle()">
+  Click me
+</button>
+
+<router-outlet></router-outlet>

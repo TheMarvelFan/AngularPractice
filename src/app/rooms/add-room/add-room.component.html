@@ -1,0 +1,123 @@
+<h1>Add Room Page</h1>
+
+{{roomForm.valid | json}}
+{{roomForm.invalid | json}}
+{{roomForm.pristine | json}}
+{{roomForm.dirty | json}}
+{{roomForm.value | json}}
+
+<div [hidden]="successMessage === ''" class="alert alert-success">
+  {{ successMessage }}
+</div>
+<form (ngSubmit)="addRoom(roomForm)" #roomForm="ngForm">
+  <div class="form-group">
+    <input
+      #roomType=ngModel
+      required
+      [minlength]="5" [maxlength]="20"
+      class="form-control"
+      type="text"
+      name="roomType"
+      pattern="[a-zA-Z ]*"
+      placeholder="Room Type"
+      [(ngModel)]="room.roomType"
+      [ngModelOptions]="{ 'updateOn': 'blur' }"
+    /> <!-- above is for controlling value change reflection type in template driven forms -->
+    <div
+      class="alert alert-danger"
+      *ngIf="roomType.errors?.['minlength']"
+    >
+      Room Type should be minimum 5 characters
+    </div>
+  </div>
+  <div class="form-group">
+    <input
+      required
+      class="form-control"
+      type="number"
+      name="roomPrice"
+      placeholder="Price"
+      [(ngModel)]="room.roomPrice"
+    />
+  </div>
+  <div class="form-group">
+    <input
+      required
+      class="form-control"
+      type="number"
+      name="roomNumber"
+      placeholder="Room Number"
+      [(ngModel)]="room.roomNumber"
+    />
+  </div>
+  <div class="form-group">
+    <input
+      required
+      class="form-control"
+      type="number"
+      name="roomCapacity"
+      min="1"
+      max="6"
+      placeholder="Room Capacity"
+      [(ngModel)]="room.roomCapacity"
+    />
+  </div>
+  <div class="form-group">
+    <input
+      #roomPhoto=ngModel
+      required
+      class="form-control"
+      [minlength]="5"
+      [maxlength]="20"
+      type="text"
+      name="roomPhoto"
+      placeholder="Room Photo"
+      [(ngModel)]="room.roomPhoto"
+    />
+<!--    <div>-->
+<!--      {{ roomPhoto.errors | json }}-->
+<!--    </div>-->
+    <div *ngIf="roomPhoto.dirty && roomPhoto.errors?.['required']">
+      Room Photo is required
+    </div>
+  </div>
+  <div class="form-group">
+    <input
+      required
+      class="form-control"
+      type="number"
+      name="roomRating"
+      placeholder="Rating of Room"
+      [(ngModel)]="room.rating"
+    />
+  </div>
+  <div class="form-group">
+    <input
+      required
+      class="form-control"
+      type="datetime-local"
+      name="checkInTime"
+      placeholder="Check-In Time"
+      [(ngModel)]="room.checkIn"
+    />
+  </div>
+  <div class="form-group">
+    <input
+      required
+      class="form-control"
+      type="datetime-local"
+      name="checkOutTime"
+      placeholder="Check-Out Time"
+      [(ngModel)]="room.checkOut"
+    />
+  </div>
+  <div>
+    <button
+      [disabled]="roomForm.invalid"
+      class="btn btn-primary"
+      type="submit"
+    >
+      Add Room
+    </button>
+  </div>
+</form>

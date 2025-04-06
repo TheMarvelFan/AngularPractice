@@ -1,0 +1,114 @@
+<!-- template-form.component.html -->
+<div class="container">
+  <h2>User Registration - Template-Driven Form</h2>
+
+  <form #registrationForm="ngForm" (ngSubmit)="onSubmit(registrationForm)">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        [(ngModel)]="user.name"
+        #name="ngModel"
+        required
+        minlength="3"
+        class="form-control"
+        [ngClass]="{'is-invalid': submitted && name.invalid}"
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        [(ngModel)]="user.email"
+        #email="ngModel"
+        required
+        email
+        class="form-control"
+        [ngClass]="{'is-invalid': submitted && email.invalid}"
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        [(ngModel)]="user.password"
+        #password="ngModel"
+        required
+        minlength="6"
+        class="form-control"
+        [ngClass]="{'is-invalid': submitted && password.invalid}"
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="confirmPassword">Confirm Password</label>
+      <input
+        type="password"
+        id="confirmPassword"
+        name="confirmPassword"
+        [(ngModel)]="user.confirmPassword"
+        #confirmPassword="ngModel"
+        required
+        class="form-control"
+        [ngClass]="{'is-invalid': submitted &&
+          (confirmPassword.invalid || password.value !== confirmPassword.value)}"
+      >
+      <div *ngIf="submitted &&
+        (confirmPassword.invalid || password.value !== confirmPassword.value)"
+           class="invalid-feedback">
+        <div *ngIf="password.value !== confirmPassword.value">Passwords do not match</div>
+      </div>
+    </div>
+
+    <!-- Note: FormArray equivalent is much harder in template-driven forms -->
+    <div class="form-group">
+      <label>Interests</label>
+      <div *ngFor="let interest of user.interests; let i = index" class="mb-2">
+        <div class="input-group">
+          <input
+            type="text"
+            name="interest{{i}}"
+            [(ngModel)]="user.interests[i]"
+            #interestField="ngModel"
+            required
+            class="form-control"
+            [ngClass]="{'is-invalid': submitted && interestField.invalid}"
+          >
+          <div class="input-group-append">
+            <button
+              type="button"
+              class="btn btn-danger"
+              (click)="removeInterest(i)"
+              *ngIf="user.interests.length > 1"
+            >
+              Remove
+            </button>
+          </div>
+        </div>
+        <div *ngIf="submitted && interestField.invalid" class="invalid-feedback d-block">
+        </div>
+      </div>
+      <button type="button" class="btn btn-secondary mt-2" (click)="addInterest()">
+        Add Interest
+      </button>
+    </div>
+
+    <div class="mt-4">
+      <button type="submit" class="btn btn-primary">Register</button>
+      <button type="button" class="btn btn-secondary ml-2" (click)="resetForm(registrationForm)">Reset</button>
+    </div>
+  </form>
+
+  <div *ngIf="formValues" class="mt-4">
+    <h3>Form Values:</h3>
+    <pre>{{ formValues | json }}</pre>
+  </div>
+</div>

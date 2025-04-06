@@ -1,0 +1,31 @@
+<label for="name">Name: </label>
+<input id="name" type="text" [formControl]="name">
+<div *ngIf="name.invalid && name.dirty">
+  <div *ngIf="name.errors?.['required']">Name is required</div>
+  <div *ngIf="name.errors?.['minlength']">Name must be at least 3 characters</div>
+</div>
+
+<label for="email">Email: </label>
+<input id="email" type="email" [formControl]="email">
+<div *ngIf="email.invalid && email.dirty">
+  <div *ngIf="email.errors?.['required']">Email is required</div>
+  <div *ngIf="email.errors?.['email']">Enter a valid email</div>
+</div>
+
+<label for="phone">Phone: </label>
+<input id="phone" type="text" [formControl]="phone">
+<div *ngIf="phone.invalid && phone.dirty">
+  <div *ngIf="phone.errors?.['required']">Phone number is required</div>
+  <div *ngIf="phone.errors?.['pattern']">Enter a 10-digit phone number</div>
+</div>
+
+<label for="passwordFiled">Password: </label>
+<input id="passwordFiled" type="password" [formControl]="password">
+<div *ngIf="password.invalid && password.dirty">
+  <div *ngIf="password.errors?.['required']">Password is required</div>
+  <div *ngIf="password.errors?.['minlength']">Password must be at least 6 characters</div>
+</div>
+
+<button type="submit" [disabled]="name.invalid || email.invalid || phone.invalid || password.invalid" (click)="onSubmit()">
+  Submit
+</button>

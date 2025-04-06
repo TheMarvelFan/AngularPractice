@@ -1,0 +1,46 @@
+<h2>
+  {{ title }}
+</h2>
+<!--  {{ roomList | json }} &lt;!&ndash; json pipe, very useful for debugging, displays all properties of objects and arrays &ndash;&gt;-->
+<table class="table">
+  <thead>
+    <tr>
+      <th>S. No.</th>
+      <th>Even or Odd</th>
+      <th>Room number</th>
+      <th>Room type</th>
+      <th>Price</th>
+      <th>Room Capacity</th>
+      <th>Check-in Time</th>
+      <th>Check-out Time</th>
+      <th>Rating</th>
+      <th>Select room</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr [ngClass]="e ? 'even' : 'odd'" *ngFor="let room of rooms | slice: 1 : 1000 | filter : price; let e = even; let o = odd; let i = index;">
+      <!-- slice pipe, similar to array.slice() in JS, and is end-limit exclusive -->
+      <td>{{ i + 1 | percent }}</td> <!-- percent pipe -->
+      <td>{{ o ? "Odd" : "Even" }}</td>
+      <td>{{ room.roomNumber }}</td>
+      <td>{{ room.roomType | lowercase }}</td> <!-- lowercase pipe, uppercase, titleCase similar -->
+      <td>{{ room.roomPrice | currency : "INR" }}</td> <!-- currency pipe -->
+      <td>{{ room.roomCapacity }}</td>
+      <td>{{ room.checkIn | date }}</td> <!-- date pipe -->
+      <td>{{ room.checkOut | date : 'short' }}</td> <!-- date pipe with custom format. check docs for details-->
+      <td>{{ room.rating | number : '1.3'}}</td>
+      <td>
+<!--        <button class="btn btn-primary" (click)="selectRoom(room)">-->
+<!--          Select Room-->
+<!--        </button>-->
+        <button [routerLink]="['/booking', room.roomNumber]" class="btn btn-primary">
+<!--          In the above line, './' is important. If we miss that, it will be interpreted as a value that needs to be
+              appended to the ROUTE SO FAR-->
+          Select Room
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- "Shift + Tab" to backspace indent on multiple lines -->

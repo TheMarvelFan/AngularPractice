@@ -1,0 +1,7 @@
+<h1>Room Booking</h1>
+<p *ngIf="roomNumber$ | async as roomNumber">
+  Room Number: {{ roomNumber }}
+</p>
+<p *ngIf="!(roomNumber$ | async)">
+  No room number provided.
+</p>
